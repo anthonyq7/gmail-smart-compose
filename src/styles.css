@@ -1,0 +1,10 @@
+#smart-reply-toolbar { display: flex; gap: 0.5rem; }
+.smart-reply-btn {
+padding: 0.25rem 0.75rem;
+font-size: 0.875rem;
+border-radius: 0.25rem;
+background: #f3f4f6; 
+border: none;
+cursor: pointer;
+}
+.smart-reply-btn:hover { background: #e5e7eb;}

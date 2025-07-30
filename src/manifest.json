@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Gmail Smart Reply",
+    "version": "1.0.0",
+    "description": "Generate quick replies with AI inside Gmail",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://mail.google.com/*"],
+            "js": ["content.js"]
+        }
+    ],
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://mail.google.com/*",
+        "https://<BACKEND>/*"
+    ]
+}
