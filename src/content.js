@@ -23,7 +23,7 @@ function getComposeContext() {
         return { error: 'No compose area found' };
     }
 
-    // Get the current text content (but don't show it in popup)
+    // Get the current text content
     const currentText = composeArea.innerText || composeArea.textContent || '';
     
     // Get subject line if available

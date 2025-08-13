@@ -13,12 +13,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiKeyInput = document.getElementById('apiKey');
     const saveApiKey = document.getElementById('saveApiKey');
     const resetApiKey = document.getElementById('resetApiKey');
+    let count = 0;
+    let total = 0;
 
     // Get context when popup opens
     getComposeContext();
     
     // Load saved API key
     loadApiKey();
+
+    // Load saved timing data
+    loadTimingData();
 
     // Focus on the textarea when popup opens
     customPromptTextarea.focus();
@@ -199,7 +204,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function loadTimingData() {
+        chrome.storage.local.get(['totalApiCalls', 'totalApiTime'], function(result) {
+            if (result.totalApiCalls) {
+                count = result.totalApiCalls;
+            }
+            if (result.totalApiTime) {
+                total = result.totalApiTime;
+            }
+        });
+    }
+
+    function saveTimingData() {
+        chrome.storage.local.set({
+            'totalApiCalls': count,
+            'totalApiTime': total
+        });
+    }
+
+    function saveIndividualTime(generationTime) {
+        chrome.storage.local.get(['individualTimes'], function(result) {
+            const times = result.individualTimes || [];
+            times.push(generationTime);
+            chrome.storage.local.set({ 'individualTimes': times });
+        });
+    }
+
     async function callGemini(prompt, context){
+        const startTime = performance.now();
 
         const result = await new Promise((resolve) => {
             chrome.storage.local.get(['geminiApiKey'], resolve);
@@ -243,8 +275,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const text = candidate.content.parts?.[0]?.text || '';
+        
+        const endTime = performance.now();
+        const generationTime = endTime - startTime;
+        total += generationTime;
+        count++;
+        
+        saveTimingData();
+        saveIndividualTime(generationTime);
+
         return text;        
     }
+
+    function getMedianTime() {
+        if (count === 0) {
+            console.log('No API calls made yet');
+            return;
+        }
+        
+        chrome.storage.local.get(['individualTimes'], function(result) {
+            const times = result.individualTimes || [];
+            if (times.length === 0) {
+                console.log('No individual timing data available');
+                return;
+            }
+            
+            const sorted = times.sort((a, b) => a - b);
+            const median = sorted[Math.floor(sorted.length / 2)];
+            
+            console.log(`Total time: ${total.toFixed(2)}ms`);
+            console.log(`Total calls: ${count}`);
+            console.log(`Median response time: ${median.toFixed(2)}ms`);
+        });
+    }
+
+    window.getMedianTime = getMedianTime;
 
     function showStatus(message, type) {
         statusDiv.textContent = message;

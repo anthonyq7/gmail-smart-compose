@@ -1,4 +1,4 @@
-# Gmail Smart Reply Extension
+# Gmail Smart Compose Extension
 
 A Chrome extension that uses Google's Gemini AI to generate intelligent email responses directly in Gmail.
 
