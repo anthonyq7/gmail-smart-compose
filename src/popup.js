@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiKeyInput = document.getElementById('apiKey');
     const saveApiKey = document.getElementById('saveApiKey');
     const resetApiKey = document.getElementById('resetApiKey');
+    
+    // Setup notice elements
+    const setupNotice = document.getElementById('setupNotice');
+    const setupBtn = document.getElementById('setupBtn');
+    
     let count = 0;
     let total = 0;
 
@@ -21,6 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load saved API key
     loadApiKey();
+    
+    // Setup button event listener
+    setupBtn.addEventListener('click', function() {
+        settingsModal.style.display = 'flex';
+    });
 
     // Load saved timing data
     loadTimingData();
@@ -112,6 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
             chrome.storage.local.set({ 'geminiApiKey': apiKey }, function() {
                 showStatus('API key saved successfully!', 'success');
                 settingsModal.style.display = 'none';
+                // Hide setup notice after saving API key
+                setupNotice.style.display = 'none';
+                // Enable generate button
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate & Insert';
             });
         } else {
             showStatus('Please enter a valid API key', 'error');
@@ -123,6 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
             apiKeyInput.value = '';
             showStatus('API key reset successfully!', 'success');
             settingsModal.style.display = 'none'; // Close the modal
+            // Show setup notice after resetting API key
+            setupNotice.style.display = 'flex';
+            // Disable generate button
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'API Key Required';
         });
     });
 
@@ -200,6 +220,17 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.storage.local.get(['geminiApiKey'], function(result) {
             if (result.geminiApiKey) {
                 apiKeyInput.value = result.geminiApiKey;
+                // Hide setup notice if API key exists
+                setupNotice.style.display = 'none';
+                // Enable generate button
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate & Insert';
+            } else {
+                // Show setup notice if no API key
+                setupNotice.style.display = 'flex';
+                // Disable generate button
+                generateBtn.disabled = true;
+                generateBtn.textContent = 'API Key Required';
             }
         });
     }
@@ -222,23 +253,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function saveIndividualTime(generationTime) {
-        chrome.storage.local.get(['individualTimes'], function(result) {
-            const times = result.individualTimes || [];
-            times.push(generationTime);
-            chrome.storage.local.set({ 'individualTimes': times });
-        });
-    }
+
 
     async function callGemini(prompt, context){
-        const startTime = performance.now();
 
         const result = await new Promise((resolve) => {
             chrome.storage.local.get(['geminiApiKey'], resolve);
         });
         
         if (!result.geminiApiKey){
-            throw new Error('Gemini API key is not set');
+            throw new Error('Gemini API key is not set. Please add your API key in Settings.');
         }
 
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${encodeURIComponent(result.geminiApiKey)}`;
@@ -246,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const requestBody = {
             contents: [{
                 parts: [{
-                    text: `Context: ${context}\n\nUser Request: ${prompt}\n\nPlease provide a helpful response based on the context and user request Please only give one response that would be helpful to the user. You are a helpful email assistant.`
+                    text: `Context: ${context}\n\nUser Request: ${prompt}\n\nYou are a helpful and professional email assistant called Gmail Smart Compose.Please provide a helpful response based on the context and user request. Please only give one response that would be helpful to the user.`
                 }]
             }]
         };
@@ -255,6 +279,8 @@ document.addEventListener('DOMContentLoaded', function() {
             throw new Error('Prompt is too long (>4000 characters)');
         }
 
+        const startTime = performance.now();
+        
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -282,34 +308,11 @@ document.addEventListener('DOMContentLoaded', function() {
         count++;
         
         saveTimingData();
-        saveIndividualTime(generationTime);
 
         return text;        
     }
 
-    function getMedianTime() {
-        if (count === 0) {
-            console.log('No API calls made yet');
-            return;
-        }
-        
-        chrome.storage.local.get(['individualTimes'], function(result) {
-            const times = result.individualTimes || [];
-            if (times.length === 0) {
-                console.log('No individual timing data available');
-                return;
-            }
-            
-            const sorted = times.sort((a, b) => a - b);
-            const median = sorted[Math.floor(sorted.length / 2)];
-            
-            console.log(`Total time: ${total.toFixed(2)}ms`);
-            console.log(`Total calls: ${count}`);
-            console.log(`Median response time: ${median.toFixed(2)}ms`);
-        });
-    }
 
-    window.getMedianTime = getMedianTime;
 
     function showStatus(message, type) {
         statusDiv.textContent = message;

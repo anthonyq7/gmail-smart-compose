@@ -118,6 +118,20 @@
             box-shadow: 0 2px 4px rgba(26, 115, 232, 0.3);
         }
         
+        .generate-btn:disabled {
+            background: linear-gradient(135deg, #dadce0 0%, #bdc1c6 100%);
+            color: #5f6368;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .generate-btn:disabled:hover {
+            background: linear-gradient(135deg, #dadce0 0%, #bdc1c6 100%);
+            transform: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
         .status {
             margin-top: 16px;
             padding: 12px 16px;
@@ -354,6 +368,79 @@
             line-height: 1.4;
         }
         
+        .setup-notice {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 1px solid #ffc107;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.2);
+        }
+        
+        .setup-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .setup-text {
+            flex: 1;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #856404;
+        }
+        
+        .setup-text strong {
+            color: #856404;
+            font-weight: 600;
+        }
+        
+        .setup-btn {
+            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            color: #856404;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3);
+        }
+        
+        .setup-btn:hover {
+            background: linear-gradient(135deg, #ffb300 0%, #ffa000 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(255, 193, 7, 0.4);
+        }
+        
+        .setup-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .api-link {
+            background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(26, 115, 232, 0.3);
+        }
+        
+        .api-link:hover {
+            background: linear-gradient(135deg, #1557b0 0%, #3367d6 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(26, 115, 232, 0.4);
+        }
+        
         input[type="password"] {
             width: 100%;
             padding: 12px 16px;
@@ -381,6 +468,17 @@
                 <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
             </svg>
         </button>
+    </div>
+    
+    <div id="setupNotice" class="setup-notice">
+        <div class="setup-icon">🔑</div>
+        <div class="setup-text">
+            <strong>Setup Required:</strong> You need a Gemini API key to use this extension.
+            <div class="setup-links">
+                <a href="https://makersuite.google.com/app/apikey" target="_blank" class="api-link">Get API Key</a>
+                <button id="setupBtn" class="setup-btn">Configure</button>
+            </div>
+        </div>
     </div>
     
     <div id="contextInfo" class="context-info" style="display: none;">

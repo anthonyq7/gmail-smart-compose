@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Gmail Smart Compose",
     "version": "1.0.0",
-    "description": "Generate quick replies with AI inside Gmail",
+    "description": "Generate AI-powered email responses in Gmail using Gemini AI. Requires Gemini API key setup.",
     "icons": {
         "16": "icons/icon16.png",
         "48": "icons/icon48.png",
@@ -19,7 +19,6 @@
     ],
     "permissions": [
         "activeTab",
-        "scripting",
         "storage"
     ],
     "host_permissions": [

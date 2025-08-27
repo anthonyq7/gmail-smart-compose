@@ -1,16 +1,28 @@
 # Gmail Smart Compose Extension
 
-A Chrome extension that uses Google's Gemini AI to generate intelligent email responses directly in Gmail. Currently pending review for the Chrome Web Store. 
+A Chrome extension that leverages Google's Gemini AI to generate intelligent email responses directly within Gmail. Currently pending review for the Chrome Web Store.
+
+## Important: Setup Required
+
+**This extension requires a Gemini API key to function.** Without setting up an API key, the AI features will not work.
+
+- **Get your free API key**: [Google AI Studio](https://makersuite.google.com/app/apikey)
+- **Setup takes 2 minutes**: Add your API key in the extension settings
+- **Free tier**: 15 requests/minute with Google's free Gemini API 
 
 ## Features
 
-- 🤖 **AI-Powered Responses**: Uses Gemini 2.5 Flash Lite for intelligent email replies
-- 📧 **Gmail Integration**: Seamlessly works within Gmail's compose interface
-- 🎯 **Context Aware**: Gathers context from the email you're replying to
-- ⚙️ **Easy Setup**: Simple API key configuration
-- 🔒 **Secure**: API key stored locally in Chrome storage
+- **AI-Powered Responses**: Uses Gemini 2.5 Flash Lite for intelligent email replies
+- **Gmail Integration**: Seamlessly works within Gmail's compose interface
+- **Context Aware**: Gathers context from the email you're replying to
+- **Easy Setup**: Simple API key configuration
+- **Secure**: API key stored locally in Chrome storage
 
 ## Installation
+
+### Prerequisites
+- Google Chrome browser
+- Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 
 ### Step 1: Download the Extension
 1. Clone or download this repository
@@ -28,11 +40,11 @@ A Chrome extension that uses Google's Gemini AI to generate intelligent email re
 
 ### Step 4: Configure API Key
 1. Click the extension icon in your Chrome toolbar
-2. Click the **Settings** button (⚙️) in the top-right corner
+2. Click the **Settings** button in the top-right corner
 3. Enter your **Gemini API key** in the settings modal
 4. Click **"Save"**
 
-#### Getting a Gemini API Key
+#### Obtaining a Gemini API Key
 1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
 2. Sign in with your Google account
 3. Click **"Create API Key"**
@@ -72,24 +84,24 @@ A Chrome extension that uses Google's Gemini AI to generate intelligent email re
 
 ## Privacy & Security
 
-- 🔐 **Local Storage**: Your API key is stored securely in Chrome's local storage
-- 🚫 **No Server Storage**: No data is sent to our servers
-- 📧 **Google AI**: Email content is sent to Google's Gemini AI service
-- ⚠️ **Important**: We are not responsible for how Google handles your email data
+- **Local Storage**: Your API key is stored securely in Chrome's local storage
+- **No Server Storage**: No data is sent to our servers
+- **Google AI**: Email content is sent to Google's Gemini AI service
+- **Important**: We are not responsible for how Google handles your email data
 
 ## Troubleshooting
 
-### Extension Not Working?
+### Extension Not Working
 - Ensure you're on `https://mail.google.com/*`
 - Check that your API key is correctly set in Settings
 - Verify the extension is enabled in `chrome://extensions/`
 
-### API Key Issues?
+### API Key Issues
 - Get a fresh API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 - Ensure you have sufficient quota (free tier: 15 requests/minute)
 - Check that the key is properly saved in the extension settings
 
-### No Response Generated?
+### No Response Generated
 - Check your internet connection
 - Verify your API key is valid
 - Ensure you have remaining API quota
@@ -100,12 +112,12 @@ A Chrome extension that uses Google's Gemini AI to generate intelligent email re
 - **Model**: Gemini 2.5 Flash Lite
 - **API**: Google Generative AI REST API
 - **Storage**: Chrome Extension Local Storage
-- **Permissions**: Active tab, scripting, storage
+- **Permissions**: Active tab, storage
 - **Host**: Gmail (mail.google.com)
 
 ## Support
 
-If you encounter issues:
+For technical issues:
 1. Check the browser console for error messages
 2. Verify your API key and quota
 3. Ensure you're using the latest version of Chrome
