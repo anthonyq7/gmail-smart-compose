@@ -1,6 +1,8 @@
 # Gmail Smart Compose Extension
 
-A Chrome extension that leverages Google's Gemini AI to generate intelligent email responses directly within Gmail. Currently available as an extension on the Chrome Web Store. 
+**[Install from Chrome Web Store](https://chromewebstore.google.com/detail/gmail-smart-compose/meafhkniffdncaggpbimmboicfemoiig)**
+
+A Chrome extension that leverages Google's Gemini AI to generate intelligent email responses directly within Gmail. Available now on the Chrome Web Store!
 
 ## Important: Setup Required
 
